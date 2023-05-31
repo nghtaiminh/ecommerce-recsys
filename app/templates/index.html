@@ -1,0 +1,93 @@
+{% extends "base.html" %} 
+{% import "_macros.html" as macros %} 
+{% from"bootstrap4/form.html" import render_form %} 
+{% block title %}Homepage{%endblock %} 
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/owl.carousel.min.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/owl.theme.default.min.css') }}" />
+{% endblock %} 
+
+{% block page_content %}
+
+<h3 class="mb-3">Popular Categories</h3>
+<div class="row mb-5">
+  {% for id, name in categories.items() %}
+  <a href='{{ url_for(".search", c=id) }}' class="card bg-white col-6 col-md-4 col-lg-3">
+    <div class="p-2 text-center">{{ name }}</div>
+  </a>
+  {% endfor %}
+</div>
+
+
+<!-- Popular Carousel -->
+<h3 class="mb-3">Trending Products</h3>
+<div class="popular-carousel">
+  <div class="owl-carousel owl-theme">
+    {% for product in popular_products %}
+    <span class="item">
+      <div class="card card-body border-0 h-100 d-flex flex-column">
+        <a href="{{ url_for('main.product', id=product.Product.id) }}"
+          class="flex-grow-1 d-flex flex-column text-center">
+          <div title="{{ product.Product.name }}" class="book-img">
+            <img class="img-fluid" src="{{product.Product.image}}" alt="" />
+          </div>
+          <div class="mw-100 text-dark py-2 text-left">
+            <div class="book-title">{{ product.Product.name }}</div>
+            <div class="text-truncate"><small>by {{ product.Product.brand }}</small></div>
+          </div>
+          <div class="mw-100 text-dark pb-2">
+            <div class="h5 text-left text-danger">$ {{ product.Product.price }}</div>
+          </div>
+        </a>
+        <button data-id="{{ product.Product.id }}" class="w-100 btn btn-sm btn-dark add-basket">Add to basket</button>
+      </div>
+    </span>
+    {% endfor %}
+  </div>
+  <div class="owl-theme">
+    <div class="owl-controls">
+      <div class="owl-nav"></div>
+    </div>
+  </div>
+</div>
+<!-- END Popular Carousel -->
+<br>
+
+<!-- Personalized Recommendation Carousel -->
+{% if current_user.is_authenticated and recommend_products|length > 0 %}
+<h3 class="mb-3">Recommended for you</h3>
+<div class="recommendation-carousel">
+  <div class="owl-carousel owl-theme">
+    {% for product in recommend_products %}
+    <span class="item">
+      <div class="card card-body border-0 h-100 d-flex flex-column">
+        <a href="{{ url_for('main.product', id=product.id) }}" class="flex-grow-1 d-flex flex-column text-center">
+          <div title="{{ product.name }}" class="book-img">
+            <img class="img-fluid" src="{{product.image}}" alt="" />
+          </div>
+          <div class="mw-100 text-dark py-2 text-left">
+            <div class="book-title">{{ product.name }}</div>
+            <div class="text-truncate"><small>by {{ product.brand }}</small></div>
+          </div>
+          <div class="mw-100 text-dark pb-2">
+            <div class="h5 text-left text-danger">$ {{ product.price }}</div>
+          </div>
+        </a>
+        <button data-id="{{ product.id }}" class="w-100 btn btn-sm btn-dark add-basket">Add to basket</button>
+      </div>
+    </span>
+    {% endfor %}
+  </div>
+  <div class="owl-theme">
+    <div class="owl-controls">
+      <div class="owl-nav"></div>
+    </div>
+  </div>
+</div>
+{% endif %}
+<!-- END Recommendation Carousel -->
+<br>
+{% endblock %}
+</div>
+</div>

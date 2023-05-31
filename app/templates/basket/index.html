@@ -1,0 +1,126 @@
+{% extends "base.html" %} {% block title %}My Basket{% endblock %} {%
+block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/owl.carousel.min.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/owl.theme.default.min.css') }}" />
+{% endblock %} {% block page_content %}
+<h4>Your Basket</h4>
+<div class="row mt-4 mb-5">
+  <div class="col-sm-12 col-xl-8 mb-3">
+    <div class="card card-body">
+      {% for product in products %}
+      <div class="item d-flex mb-3">
+        <a href="{{ url_for('main.product', id=product.id) }}" class="book-img basket-item">
+          <img class="img-fluid" src="{{ product.image }}" alt="" />
+        </a>
+        <div class="row flex-grow-1 px-3">
+          <div class="col-7">
+            <a href="{{ url_for('main.product', id=product.id) }}" class="h5 text-dark">{{ product.name }}</a>
+            <div style="font-size: 0.85em">{{ product.categories|map(attribute="category.name")|join(", ")}} | {{
+              product.brand }}</div>
+            <p class="h5 text-danger">$ {{ product.price }}</p>
+          </div>
+          <div class="col-5 text-right">
+            <div class="form-group row">
+              <label class="col-form-label col-9 pr-2">Quantity: </label>
+              <input data-id="{{ product.id }}" data-price="{{ product.price }}"
+                class="form-control col-3 item-basket-quantity" type="number" min="1" max="100"
+                value="{{ baskets.get(product.id|string) }}">
+            </div>
+            <div class="h4 text-danger my-3">$ <span class="item-basket-price">{{ "%0.2f"
+                |format(baskets.get(product.id|string)*product.price) }}</span>
+            </div>
+            <button data-id="{{ product.id }}" class="btn btn-sm btn-outline-secondary remove-basket">Remove</button>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="col-sm-12 col-xl-4">
+    <div class="card card-body text-center">
+      <div class="form-group row">
+        <label class="col-5 col-form-label text-left">Delivery cost: </label>
+        <div class="col-7">
+          <h3 class="col-form-label text-left">FREE</h3>
+        </div>
+      </div>
+      <div class="form-group row text-danger h4">
+        <label class="col-5 col-form-label text-left">Total: </label>
+        <div class="col-7">
+          <h3 class="col-form-label text-left" id="total-price">$ {{ "%0.2f" |format(total_price) }}</h3>
+        </div>
+      </div>
+      <hr>
+      <form action="/basket/checkout" method="POST">
+        <h5>Order Information</h5>
+        <div class="form-group row mt-2">
+          <label for="name" class="col-4 col-form-label text-left">Name: </label>
+          <div class="col-8">
+            {% if current_user.is_authenticated %}
+            <input type="text" class="form-control" id="name" name="name" value="{{ current_user.name }}" readonly>
+            {% else %}
+            <input type="text" class="form-control" id="name" name="name" required>
+            {% endif %}
+          </div>
+        </div>
+        <div class="form-group row mt-2">
+          <label for="email" class="col-4 col-form-label text-left">Email: </label>
+          <div class="col-8">
+            {% if current_user.is_authenticated %}
+            <input type="text" class="form-control" id="email" name="email" value="{{ current_user.email }}" readonly>
+            {% else %}
+            <input type="text" class="form-control" id="email" name="email" required>
+            {% endif %}
+          </div>
+        </div>
+        <div class="form-group row mt-2">
+          <label for="address" class="col-4 col-form-label text-left">Address: </label>
+          <div class="col-8">
+            <input type="text" class="form-control" id="address" name="address" value="{{ current_user.address }}" required>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-dark w-100 mt-2">
+          <i class="fa-solid fa-cart-plus mr-2"></i> Checkout
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Recommendation Carousel -->
+{% if recommend_products|length > 0 %}
+<h3 class="mb-3">Often bought with your items</h3>
+<div class="recommendation-carousel">
+  <div class="owl-carousel owl-theme">
+    {% for product in recommend_products %}
+    <span class="item">
+      <div class="card card-body border-0 h-100 d-flex flex-column">
+        <a href="{{ url_for('main.product', id=product.id) }}" class="flex-grow-1 d-flex flex-column text-center">
+          <div title="{{ product.name }}" class="book-img">
+            <img class="img-fluid" src="{{ product.image }}" alt="" />
+          </div>
+          <div class="mw-100 text-dark py-2 text-left">
+            <div class="book-title">{{ product.name }}</div>
+            <div class="text-truncate"><small>by {{ product.brand }}</small></div>
+          </div>
+          <div class="mw-100 text-dark pb-2">
+            <div class="h5 text-left text-danger">$ {{ product.price }}</div>
+          </div>
+        </a>
+        <button data-id="{{ product.id }}" class="w-100 btn btn-sm btn-dark add-basket">Add to basket</button>
+      </div>
+    </span>
+    {% endfor %}
+  </div>
+  <div class="owl-theme">
+    <div class="owl-controls">
+      <div class="owl-nav"></div>
+    </div>
+  </div>
+</div>
+{% endif %}
+<!-- END Recommendation Carousel -->
+
+<br>
+
+{% endblock %}

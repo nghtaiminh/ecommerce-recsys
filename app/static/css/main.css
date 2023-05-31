@@ -1,0 +1,153 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900|Rubik:300,400,500,700,900');
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f0f0f0;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+.item .book-title {
+    font-size: 1em;
+    font-weight: 600;
+    text-align: left;
+    min-height: 3em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.item .book-img {
+    justify-content: center;
+    align-items: center;
+}
+
+.book-img.basket-item {
+    display: flex;
+    height: 150px;
+    min-width: 110px;
+    max-width: 110px;
+}
+
+.img-fluid {
+    height: 100%;
+}
+
+
+.page-link {
+    color: #343a40;
+}
+
+.btn-primary,
+.page-item.active .page-link {
+    background-color: #343a40 !important;
+    border-color: #343a40 !important;
+}
+
+.dropdown-item.active {
+    background-color: #343a40;
+}
+
+.form-control:focus {
+    border-color: #1d2124;
+    box-shadow: 0 0 0 0.2rem rgb(82 88 93 / 50%);
+}
+
+/* Custom nav button on carousel */
+.popular-carousel,
+.recently-viewed-carousel,
+.recommendation-carousel {
+    position: relative;
+}
+
+.owl-theme .owl-nav {
+    position: absolute;
+    top: 40%;
+    left: 0;
+    right: 0;
+}
+
+.owl-nav .owl-prev,
+.owl-nav .owl-next {
+    position: absolute;
+    color: inherit !important;
+    background: none !important;
+    border: none !important;
+    z-index: 9;
+}
+
+.owl-nav i {
+    font-size: 2.5em;
+}
+
+.owl-nav .owl-prev {
+    left: -3em;
+}
+
+.owl-nav .owl-next {
+    right: -3em;
+}
+
+.owl-carousel .item .img-fluid {
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.owl-carousel .item:hover img {
+    opacity: 0.85;
+}
+
+.search-result-item {
+    display: flex;
+    height: 120px;
+    overflow: hidden;
+    margin-bottom: 0.8rem;
+    color: #343a40;
+}
+
+
+.search-result-item:hover {
+    color: #000;
+}
+
+.search-result-item .product-image {
+    height: 100%;
+    transition: 0.3s;
+    border-radius: 10px;
+}
+
+.search-result-item:hover .product-image {
+    opacity: 0.75;
+}
+
+.search-result-item .product-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    /* number of lines to show */
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+@media (min-width: 575px) {
+    .item .book-img {
+        height: 180px;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar-collapse .navbar-nav {
+        margin-bottom: 0.5em;
+    }
+}
+
+@media (min-width: 1199px) {
+    .search-input {
+        min-width: 450px !important;
+    }
+}

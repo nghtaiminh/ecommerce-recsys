@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% import "_macros.html" as macros %}
+{% block title%}History{% endblock %}
+{% block styles %}
+{% endblock %}
+
+{% block page_content%}
+<h4>History</h4>
+<div class="card">
+  <div class="d-flex flex-wrap">
+    {% if type==1 %}
+    <a
+      href="{{ url_for('main.history', type=0) }}"
+      class="btn btn-outline-dark m-1"
+      >All time</a
+    >
+    <a class="btn btn-dark m-1">Current session</a>
+    {% else %}
+    <a class="btn btn-dark m-1">All time</a>
+    <a
+      href="{{ url_for('main.history', type=1) }}"
+      class="btn btn-outline-dark m-1"
+      >Current session</a
+    >
+    {% endif %}
+  </div>
+</div>
+<div class="card mt-2">
+  {% if pagination %}
+  <div class="col-12 d-flex justify-content-center mt-3">
+    {{ macros.pagination_widget(pagination, 'main.history', type=type) }}
+  </div>
+  {% endif %}
+</div>
+<div class="card card-body">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">ID User</th>
+        <th scope="col">ID Product</th>
+        <th scope="col">Product Name</th>
+        <th scope="col">Datetime</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for interaction in interactions %}
+      <tr>
+        <th>{{ interaction.user_id }}</th>
+        <td><a href="{{ url_for('main.product', id=interaction.product_id) }}">{{ interaction.product_id }}</a></td>
+        <td>{{ interaction.product.name }}</td>
+        <td>{{ interaction.timestamp.strftime('%H:%M:%S %d/%m/%Y') }}</td>
+        <td>
+            {% if interaction.action_type.id == 1 %}
+            <span class="badge badge-warning p-2"
+              >{{ interaction.action_type.name|replace("_", " ")|capitalize
+              }}</span
+            >
+            {% elif interaction.action_type.id == 2 %}
+            <span class="badge badge-info p-2"
+              >{{ interaction.action_type.name|replace("_", " ")|capitalize
+              }}</span
+            >
+            {% else %}
+            <span class="badge badge-success p-2"
+              >{{ interaction.action_type.name|replace("_", " ")|capitalize
+              }}</span
+            >
+            {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="card mt-2">
+  {% if pagination %}
+  <div class="col-12 d-flex justify-content-center mt-3">
+    {{ macros.pagination_widget(pagination, 'main.history', type=type) }}
+  </div>
+  {% endif %}
+</div>
+
+{% endblock %}

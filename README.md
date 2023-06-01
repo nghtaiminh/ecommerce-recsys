@@ -1,6 +1,10 @@
 # BookRec - Web Prototype
 
-A web prototype to demonstrate session-based recommendation using 2 Transformer-based model which are SASRec and BERT4Rec
+- A web prototype to demonstrate session-based recommendation using 2 Transformer-based models, which are SASRec and BERT4Rec
+
+- The code to train the models can be found in this repo: [here](https://github.com/nghtaiminh/transformer-recsys-algo)
+
+- Download the trained models and data from: [link](https://drive.google.com/file/d/13uWx2VyjxjJ2jRgrr9xotQZKAUaYaHF5/view?usp=drive_link), put the content of `data` folder to `./data/` and the content of the `model` to the corresponding model in `./app/recommender/` folder
 
 ## Installation
 

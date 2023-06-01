@@ -29,7 +29,7 @@ parser.add_argument('--bert_mask_prob', type=float, default=0.5,
 def create_model():
     args = parser.parse_args()
     model = BERTModel(args)
-    path = 'app/recommender/bert4rec/best_acc_model.pth'
+    path = 'app/recommender/bert4rec/bert4rec_model.pth'
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     model_state_dict = torch.load(path, map_location=device)[
         'model_state_dict']

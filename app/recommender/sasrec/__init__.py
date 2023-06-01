@@ -28,7 +28,7 @@ parser.add_argument(
     '--device', default=torch.device('cuda' if torch.cuda.is_available() else 'cpu'), type=str)
 parser.add_argument('--inference_only', default=True, type=str2bool)
 parser.add_argument('--state_dict_path',
-                    default='app/recommender/sasrec/SASRec.epoch=100.lr=0.001.layer=2.head=1.hidden=64.maxlen=100.units=64.dropt=0.4.blocks=2.pth', type=str)
+                    default='app/recommender/sasrec/sasrec_model.pth', type=str)
 
 
 def create_model():
